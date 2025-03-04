@@ -1,0 +1,4 @@
+I'm making a job hunting website. the data that you'll use for now is in the jobs.json. I want you to make a next js website with the following using next.js and tailwind.css:
+1. a landing page that pitches the user on this platform being the key place for them to find software engineering related internships
+2. a listing page that provides a paginated view of the jobs.json (provide a mock company image and mock description)
+3. any other features/pages that you think a job listing page for internships would benefit from!

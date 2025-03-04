@@ -2,7 +2,13 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111827;
+  --primary: #5046e4;
+  --primary-light: #6366f1;
+  --primary-dark: #4338ca;
+  --secondary: #111827;
+  --gray-light: #f3f4f6;
+  --gray-medium: #d1d5db;
 }
 
 @theme inline {
@@ -16,11 +22,50 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --gray-light: #1f2937;
+    --gray-medium: #4b5563;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Custom gradient animations */
+.animated-gradient {
+  background-size: 400% 400%;
+  animation: gradient 8s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Custom button styles similar to JobRight */
+.btn-primary {
+  @apply bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 inline-flex items-center justify-center;
+}
+
+.btn-secondary {
+  @apply bg-white hover:bg-gray-50 text-indigo-600 font-medium py-3 px-6 rounded-lg border border-indigo-200 transition-all duration-200 inline-flex items-center justify-center;
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+}
+
+/* Custom section padding */
+.section-padding {
+  @apply py-16 md:py-24;
 }
