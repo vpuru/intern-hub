@@ -1,38 +1,88 @@
-import fs from 'fs';
-import path from 'path';
 import { Job } from '../types/job';
+import supabase from './supabase';
 
-export function getAllJobs(): Job[] {
-  const filePath = path.join(process.cwd(), 'jobs.json');
-  const fileContents = fs.readFileSync(filePath, 'utf8');
-  const jobs: Job[] = JSON.parse(fileContents);
+export async function getAllJobs(): Promise<Job[]> {
+  const { data, error } = await supabase
+    .from('jobs')
+    .select('*');
   
-  return jobs;
+  if (error) {
+    console.error('Error fetching jobs:', error);
+    return [];
+  }
+  
+  return data || [];
 }
 
-export function getPaginatedJobs(page: number, pageSize: number = 10): { 
+export async function getPaginatedJobs(page: number, pageSize: number = 10, 
+  filters?: { location?: string, category?: string, search?: string }
+): Promise<{ 
   jobs: Job[],
   totalJobs: number,
   totalPages: number 
-} {
-  const allJobs = getAllJobs();
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
+}> {
+  let query = supabase
+    .from('jobs')
+    .select('*', { count: 'exact' });
+  
+  // Apply filters if provided
+  if (filters) {
+    if (filters.location && filters.location !== 'all') {
+      query = query.eq('location', filters.location);
+    }
+    
+    if (filters.category && filters.category !== 'all') {
+      // This assumes you have a 'category' column in your jobs table
+      // If the structure is different, adjust accordingly
+      query = query.eq('category', filters.category);
+    }
+    
+    if (filters.search) {
+      query = query.or(
+        `company_name.ilike.%${filters.search}%,role.ilike.%${filters.search}%,location.ilike.%${filters.search}%`
+      );
+    }
+  }
+  
+  // Calculate pagination
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+  
+  const { data, error, count } = await query
+    .range(from, to)
+    .order('date_posted', { ascending: false });
+  
+  if (error) {
+    console.error('Error fetching paginated jobs:', error);
+    return {
+      jobs: [],
+      totalJobs: 0,
+      totalPages: 0
+    };
+  }
+  
+  const totalJobs = count || 0;
+  const totalPages = Math.ceil(totalJobs / pageSize);
   
   return {
-    jobs: allJobs.slice(startIndex, endIndex),
-    totalJobs: allJobs.length,
-    totalPages: Math.ceil(allJobs.length / pageSize)
+    jobs: data || [],
+    totalJobs,
+    totalPages
   };
 }
 
-export function getJobByCompanyAndRole(companyName: string, role: string): Job | null {
-  const allJobs = getAllJobs();
-  const job = allJobs.find(
-    job => 
-      job.company_name.toLowerCase() === companyName.toLowerCase() && 
-      job.role.toLowerCase() === role.toLowerCase()
-  );
+export async function getJobByCompanyAndRole(companyName: string, role: string): Promise<Job | null> {
+  const { data, error } = await supabase
+    .from('jobs')
+    .select('*')
+    .eq('company_name', companyName)
+    .eq('role', role)
+    .single();
   
-  return job || null;
+  if (error || !data) {
+    console.error('Error fetching job:', error);
+    return null;
+  }
+  
+  return data;
 }

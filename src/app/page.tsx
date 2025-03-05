@@ -3,9 +3,13 @@ import Link from "next/link";
 import { getAllJobs } from "@/lib/jobs";
 import { generateCompanyLogo } from "@/lib/mockData";
 
-export default function Home() {
-  const recentJobs = getAllJobs().slice(0, 6);  
-  
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function Home() {
+  const allJobs = await getAllJobs();
+  const recentJobs = allJobs.slice(0, 6);
+
   return (
     <>
       {/* Hero Section */}
@@ -19,20 +23,14 @@ export default function Home() {
                   <span className="block text-indigo-600">Tech Internship</span>
                 </h1>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                  Discover top software engineering internships at leading tech companies. 
-                  Launch your career with InternHub, the premier platform for student developers.
+                  Discover top software engineering internships at leading tech companies. Launch
+                  your career with InternHub, the premier platform for student developers.
                 </p>
                 <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4">
-                  <Link 
-                    href="/jobs" 
-                    className="btn-primary"
-                  >
+                  <Link href="/jobs" className="btn-primary">
                     Browse Internships
                   </Link>
-                  <Link 
-                    href="/resources" 
-                    className="btn-secondary"
-                  >
+                  <Link href="/resources" className="btn-secondary">
                     Prepare for Interviews
                   </Link>
                 </div>
@@ -41,13 +39,18 @@ export default function Home() {
                 </div>
                 <div className="mt-5 w-full sm:mx-auto sm:max-w-lg lg:ml-0 flex justify-between items-center opacity-50">
                   <div className="flex items-center justify-center">
-                    <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/MIT_logo.svg/1280px-MIT_logo.svg.png" alt="MIT" width={60} height={30} />
+                    <Image src="/MIT_logo.svg.png" alt="MIT" width={80} height={40} />
                   </div>
                   <div className="flex items-center justify-center">
-                    <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/University_of_California%2C_Berkeley_logo.svg/1280px-University_of_California%2C_Berkeley_logo.svg.png" alt="UC Berkeley" width={60} height={30} />
+                    <Image src="/UC-Berkeley-Symbol.png" alt="UC Berkeley" width={80} height={40} />
                   </div>
                   <div className="flex items-center justify-center">
-                    <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Stanford_Cardinal_logo.svg/1024px-Stanford_Cardinal_logo.svg.png" alt="Stanford" width={60} height={30} />
+                    <Image
+                      src="/Stanford-University-Logo.png"
+                      alt="Stanford"
+                      width={80}
+                      height={40}
+                    />
                   </div>
                 </div>
               </div>
@@ -68,7 +71,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      
+
       {/* Stats Section */}
       <div className="bg-gradient-to-r from-indigo-500 via-indigo-600 to-indigo-700 animated-gradient">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8 lg:py-20">
@@ -85,40 +88,37 @@ export default function Home() {
               <dt className="order-2 mt-2 text-lg leading-6 font-medium text-indigo-100">
                 Active Internships
               </dt>
-              <dd className="order-1 text-5xl font-extrabold text-white">
-                2,000+
-              </dd>
+              <dd className="order-1 text-5xl font-extrabold text-white">2,000+</dd>
             </div>
             <div className="flex flex-col mt-10 sm:mt-0">
               <dt className="order-2 mt-2 text-lg leading-6 font-medium text-indigo-100">
                 Partner Companies
               </dt>
-              <dd className="order-1 text-5xl font-extrabold text-white">
-                500+
-              </dd>
+              <dd className="order-1 text-5xl font-extrabold text-white">500+</dd>
             </div>
             <div className="flex flex-col mt-10 sm:mt-0">
               <dt className="order-2 mt-2 text-lg leading-6 font-medium text-indigo-100">
                 Success Rate
               </dt>
-              <dd className="order-1 text-5xl font-extrabold text-white">
-                94%
-              </dd>
+              <dd className="order-1 text-5xl font-extrabold text-white">94%</dd>
             </div>
           </dl>
         </div>
       </div>
-      
+
       {/* How It Works Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
-            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">How It Works</h2>
+            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
+              How It Works
+            </h2>
             <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               Your path to the perfect internship
             </p>
             <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-              We've simplified the internship hunt so you can focus on what matters most: landing your dream role.
+              We've simplified the internship hunt so you can focus on what matters most: landing
+              your dream role.
             </p>
           </div>
 
@@ -134,9 +134,12 @@ export default function Home() {
                       1
                     </span>
                     <div className="ml-6">
-                      <h3 className="text-xl leading-6 font-medium text-gray-900">Browse Listings</h3>
+                      <h3 className="text-xl leading-6 font-medium text-gray-900">
+                        Browse Listings
+                      </h3>
                       <p className="mt-2 text-base text-gray-500">
-                        Explore our curated database of internship opportunities from top tech companies.
+                        Explore our curated database of internship opportunities from top tech
+                        companies.
                       </p>
                     </div>
                   </div>
@@ -153,9 +156,12 @@ export default function Home() {
                       2
                     </span>
                     <div className="ml-6">
-                      <h3 className="text-xl leading-6 font-medium text-gray-900">Prepare & Apply</h3>
+                      <h3 className="text-xl leading-6 font-medium text-gray-900">
+                        Prepare & Apply
+                      </h3>
                       <p className="mt-2 text-base text-gray-500">
-                        Use our resources to prepare your application and improve your interview skills.
+                        Use our resources to prepare your application and improve your interview
+                        skills.
                       </p>
                     </div>
                   </div>
@@ -172,9 +178,12 @@ export default function Home() {
                       3
                     </span>
                     <div className="ml-6">
-                      <h3 className="text-xl leading-6 font-medium text-gray-900">Land Your Dream Role</h3>
+                      <h3 className="text-xl leading-6 font-medium text-gray-900">
+                        Land Your Dream Role
+                      </h3>
                       <p className="mt-2 text-base text-gray-500">
-                        Receive offers and kickstart your career in the tech industry with confidence.
+                        Receive offers and kickstart your career in the tech industry with
+                        confidence.
                       </p>
                     </div>
                   </div>
@@ -184,7 +193,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      
+
       {/* Recent Listings Section */}
       <div className="bg-gray-50 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -196,16 +205,16 @@ export default function Home() {
               Check out these freshly posted internships from top tech companies
             </p>
           </div>
-          
+
           <div className="mt-12 grid gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
             {recentJobs.map((job, index) => {
               // Create URL-friendly slugs
-              const companySlug = job.company_name.toLowerCase().replace(/\s+/g, '-');
-              const roleSlug = job.role.toLowerCase().replace(/\s+/g, '-');
+              const companySlug = job.company_name.toLowerCase().replace(/\s+/g, "-");
+              const roleSlug = job.role.toLowerCase().replace(/\s+/g, "-");
               const companyLogo = generateCompanyLogo(job.company_name);
-              
+
               return (
-                <Link 
+                <Link
                   key={index}
                   href={`/jobs/${companySlug}/${roleSlug}`}
                   className="card-hover bg-white rounded-xl overflow-hidden border border-gray-100"
@@ -213,7 +222,7 @@ export default function Home() {
                   <div className="p-6">
                     <div className="flex items-start gap-4">
                       <div className="shrink-0">
-                        <Image 
+                        <Image
                           src={companyLogo}
                           alt={`${job.company_name} logo`}
                           width={48}
@@ -226,21 +235,34 @@ export default function Home() {
                         <p className="text-indigo-600 font-medium">{job.company_name}</p>
                       </div>
                     </div>
-                    
+
                     <div className="mt-4 flex flex-wrap gap-2">
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                         {job.location}
                       </span>
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-                        Posted: {new Date(job.date_posted).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                        Posted:{" "}
+                        {new Date(job.date_posted).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        })}
                       </span>
                     </div>
-                    
+
                     <div className="mt-4 flex justify-end">
                       <div className="text-sm font-medium text-indigo-600 flex items-center">
                         View Details
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 ml-1"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </div>
                     </div>
@@ -249,18 +271,15 @@ export default function Home() {
               );
             })}
           </div>
-          
+
           <div className="mt-12 text-center">
-            <Link 
-              href="/jobs"
-              className="btn-primary"
-            >
+            <Link href="/jobs" className="btn-primary">
               View All Internships
             </Link>
           </div>
         </div>
       </div>
-      
+
       {/* Testimonials Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -272,7 +291,7 @@ export default function Home() {
               Hear from students who found success with InternHub
             </p>
           </div>
-          
+
           <div className="mt-12 grid gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
             <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
               <div className="flex items-center mb-4">
@@ -285,10 +304,11 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-600">
-                "InternHub helped me find the perfect internship opportunity at Google. The resources for interview prep were invaluable!"
+                "InternHub helped me find the perfect internship opportunity at Google. The
+                resources for interview prep were invaluable!"
               </p>
             </div>
-            
+
             <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
               <div className="flex items-center mb-4">
                 <div className="h-10 w-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold">
@@ -300,10 +320,11 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-600">
-                "I was struggling to find internships until I discovered InternHub. Within weeks, I had multiple interviews lined up!"
+                "I was struggling to find internships until I discovered InternHub. Within weeks, I
+                had multiple interviews lined up!"
               </p>
             </div>
-            
+
             <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
               <div className="flex items-center mb-4">
                 <div className="h-10 w-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold">
@@ -315,13 +336,14 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-600">
-                "The quality of listings on InternHub is unmatched. I found my dream internship and it led to a full-time offer!"
+                "The quality of listings on InternHub is unmatched. I found my dream internship and
+                it led to a full-time offer!"
               </p>
             </div>
           </div>
         </div>
       </div>
-      
+
       {/* CTA Section */}
       <div className="bg-indigo-700 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -333,7 +355,7 @@ export default function Home() {
               Join thousands of students who've found their perfect internship through InternHub.
             </p>
             <div className="mt-10 flex justify-center">
-              <Link 
+              <Link
                 href="/jobs"
                 className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-indigo-700 bg-white hover:bg-gray-50 transition-colors shadow-md"
               >

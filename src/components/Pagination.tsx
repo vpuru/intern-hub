@@ -35,11 +35,18 @@ export default function Pagination({ currentPage, totalPages, baseUrl }: Paginat
     pageNumbers.push(totalPages);
   }
   
+  // Helper function to generate URLs with pagination
+  const getPageUrl = (page: number | string) => {
+    // If baseUrl already contains query parameters
+    const separator = baseUrl.includes('?') ? '&' : '?';
+    return `${baseUrl}${separator}page=${page}`;
+  };
+  
   return (
     <div className="flex items-center justify-center py-4">
       <nav className="flex items-center justify-center" aria-label="Pagination">
         <Link
-          href={currentPage > 1 ? `${baseUrl}?page=${currentPage - 1}` : '#'}
+          href={currentPage > 1 ? getPageUrl(currentPage - 1) : '#'}
           className={`relative inline-flex items-center justify-center w-10 h-10 mx-1 rounded-md text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 ${
             currentPage <= 1 ? 'pointer-events-none opacity-50' : ''
           }`}
@@ -66,7 +73,7 @@ export default function Pagination({ currentPage, totalPages, baseUrl }: Paginat
             return (
               <Link
                 key={`page-${page}`}
-                href={`${baseUrl}?page=${page}`}
+                href={getPageUrl(page)}
                 aria-current={page === currentPage ? 'page' : undefined}
                 className={`relative inline-flex items-center justify-center w-10 h-10 mx-1 rounded-md text-sm font-medium ${
                   page === currentPage
@@ -81,7 +88,7 @@ export default function Pagination({ currentPage, totalPages, baseUrl }: Paginat
         </div>
         
         <Link
-          href={currentPage < totalPages ? `${baseUrl}?page=${currentPage + 1}` : '#'}
+          href={currentPage < totalPages ? getPageUrl(currentPage + 1) : '#'}
           className={`relative inline-flex items-center justify-center w-10 h-10 mx-1 rounded-md text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 ${
             currentPage >= totalPages ? 'pointer-events-none opacity-50' : ''
           }`}
