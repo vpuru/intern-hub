@@ -1,25 +1,26 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getAllJobs } from '@/lib/jobs';
+import { getJobByCompanyAndRole } from '@/lib/jobs';
 import { generateCompanyLogo, generateJobDescription } from '@/lib/mockData';
-import { Job } from '@/types/job';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
-export default function JobDetailPage({
+export default async function JobDetailPage({
   params,
 }: {
   params: { company: string, role: string };
 }) {
-  const jobs = getAllJobs();
+  console.log('JobDetailPage [company]/[role] - params:', params);
   
-  // Find the job by company and role slugs
-  const job = jobs.find(job => {
-    const companySlug = job.company_name.toLowerCase().replace(/\s+/g, '-');
-    const roleSlug = job.role.toLowerCase().replace(/\s+/g, '-');
-    return companySlug === params.company && roleSlug === params.role;
-  });
+  // Convert URL-friendly slugs back to proper names (replace dashes with spaces)
+  const companyName = params.company.replace(/-/g, ' ');
+  const role = params.role.replace(/-/g, ' ');
+  
+  console.log('Searching for job with company name:', companyName, 'and role:', role);
+  
+  const job = await getJobByCompanyAndRole(companyName, role);
   
   if (!job) {
     notFound();
@@ -59,16 +60,6 @@ export default function JobDetailPage({
     'Networking opportunities',
     'Potential for full-time employment after graduation'
   ];
-  
-  // Find similar jobs (jobs from the same company or with similar roles)
-  const similarJobs = jobs
-    .filter(j => 
-      j !== job && 
-      (j.company_name === job.company_name || 
-       j.role.toLowerCase().includes(job.role.toLowerCase().split(' ')[0]) ||
-       job.role.toLowerCase().includes(j.role.toLowerCase().split(' ')[0]))
-    )
-    .slice(0, 3);
   
   return (
     <div className="bg-gray-50 py-10">
@@ -197,42 +188,6 @@ export default function JobDetailPage({
               </a>
             </div>
           </div>
-          
-          {/* Similar Jobs Section */}
-          {similarJobs.length > 0 && (
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Similar Opportunities</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {similarJobs.map((job, index) => {
-                  // Create URL-friendly slugs
-                  const companySlug = job.company_name.toLowerCase().replace(/\s+/g, '-');
-                  const roleSlug = job.role.toLowerCase().replace(/\s+/g, '-');
-                  
-                  return (
-                    <Link 
-                      key={index}
-                      href={`/jobs/${companySlug}/${roleSlug}`}
-                      className="block bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
-                    >
-                      <div className="p-6">
-                        <h3 className="text-lg font-semibold mb-2 text-blue-600">{job.role}</h3>
-                        <p className="text-gray-800 font-medium">{job.company_name}</p>
-                        <p className="text-gray-600 mt-2">{job.location}</p>
-                        <div className="mt-4">
-                          <span className="inline-flex rounded-md shadow-sm">
-                            <span className="relative inline-flex items-center gap-x-1.5 rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500">
-                              View Details
-                            </span>
-                          </span>
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          )}
           
           {/* Back to Jobs Button */}
           <div className="mt-12 text-center">
