@@ -2,23 +2,24 @@ import { Job } from "../types/job";
 
 // Function to generate a consistent avatar for a company based on its name
 export function generateCompanyLogo(companyName: string): string {
-  // Create a hash from the company name for consistent colors
-  const hash = companyName.split("").reduce((acc, char) => {
-    return char.charCodeAt(0) + ((acc << 5) - acc);
-  }, 0);
+  // Create a hash from the company name for consistent colors (unused but kept for future use)
+  // const hash = companyName.split("").reduce((acc, char) => {
+  //   return char.charCodeAt(0) + ((acc << 5) - acc);
+  // }, 0);
 
   // Set background to black
   const backgroundColor = "000000"; // Black background
 
-  // Generate the initials (up to 2 characters)
-  const words = companyName.split(" ");
-  let initials = "";
-
-  if (words.length === 1) {
-    initials = words[0].substring(0, 2).toUpperCase();
-  } else {
-    initials = (words[0][0] + words[1][0]).toUpperCase();
-  }
+  // Generate the initials (up to 2 characters) - Using ui-avatars API directly
+  // This logic is handled by the API but we keep it here for reference
+  // const words = companyName.split(" ");
+  // let initials = "";
+  //
+  // if (words.length === 1) {
+  //   initials = words[0].substring(0, 2).toUpperCase();
+  // } else {
+  //   initials = (words[0][0] + words[1][0]).toUpperCase();
+  // }
 
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(
     companyName

@@ -7,18 +7,20 @@ import { generateCompanyLogo, generateJobDescription } from "@/lib/mockData";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export default async function JobDetailPage({
-  params,
-}: {
-  params: { company: string; role: string };
-}) {
-  console.log("JobDetailPage [company]/[role] - params:", params);
+export async function generateMetadata({ params }: { params: { company: string; role: string } }) {
+  const companyName = params.company.replace(/-/g, " ");
+  const role = params.role.replace(/-/g, " ");
+  
+  return {
+    title: `${role} at ${companyName} - InternHub`,
+    description: `Apply for the ${role} internship at ${companyName} on InternHub.`,
+  };
+}
 
+export default async function JobDetailPage({ params }: { params: { company: string; role: string } }) {
   // Convert URL-friendly slugs back to proper names (replace dashes with spaces)
   const companyName = params.company.replace(/-/g, " ");
   const role = params.role.replace(/-/g, " ");
-
-  console.log("Searching for job with company name:", companyName, "and role:", role);
 
   const job = await getJobByCompanyAndRole(companyName, role);
 
@@ -33,6 +35,9 @@ export default async function JobDetailPage({
     month: "long",
     day: "numeric",
   });
+
+  // Check if job is active based on application link
+  const isActive = Boolean(job.application_link) && job.application_link !== "";
 
   // More mock data for the details page
   const responsibilities = [
@@ -135,7 +140,18 @@ export default async function JobDetailPage({
                 </div>
 
                 <div className="flex-1">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{job.role}</h1>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{job.role}</h1>
+                    {!isActive && (
+                      <Image 
+                        src="/lock.svg" 
+                        alt="Position not active" 
+                        width={24} 
+                        height={24} 
+                        className="text-gray-500"
+                      />
+                    )}
+                  </div>
                   <h2 className="text-xl text-blue-600 mb-4">{job.company_name}</h2>
 
                   <div className="flex flex-wrap gap-2 mb-6">
@@ -148,16 +164,27 @@ export default async function JobDetailPage({
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                       Internship
                     </span>
+                    {!isActive && (
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                        No longer active
+                      </span>
+                    )}
                   </div>
 
-                  <a
-                    href={job.application_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  >
-                    Apply Now
-                  </a>
+                  {isActive ? (
+                    <a
+                      href={job.application_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                      Apply Now
+                    </a>
+                  ) : (
+                    <span className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-500 bg-gray-100 cursor-not-allowed">
+                      Position Closed
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -195,24 +222,26 @@ export default async function JobDetailPage({
           </div>
 
           {/* Application Section */}
-          <div className="mt-8 bg-white rounded-lg shadow overflow-hidden">
-            <div className="p-6 sm:p-8">
-              <h2 className="text-xl text-black font-semibold mb-4">How to Apply</h2>
-              <p className="text-gray-700 mb-6">
-                Click the button below to apply directly on the company's website. Make sure to
-                prepare your resume and cover letter before starting the application process.
-              </p>
+          {isActive && (
+            <div className="mt-8 bg-white rounded-lg shadow overflow-hidden">
+              <div className="p-6 sm:p-8">
+                <h2 className="text-xl text-black font-semibold mb-4">How to Apply</h2>
+                <p className="text-gray-700 mb-6">
+                  Click the button below to apply directly on the companys website. Make sure to
+                  prepare your resume and cover letter before starting the application process.
+                </p>
 
-              <a
-                href={job.application_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Apply on {job.company_name} Website
-              </a>
+                <a
+                  href={job.application_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Apply on {job.company_name} Website
+                </a>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Back to Jobs Button */}
           <div className="mt-12 text-center">

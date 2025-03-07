@@ -45,7 +45,7 @@ export async function getPaginatedJobs(page: number, pageSize: number = 10,
   }
   
   // Get all matching job IDs and determine which are active
-  const { data: allJobs, error: initialError, count: totalCount } = await initialQuery;
+  const { data: allJobs, error: initialError } = await initialQuery;
   
   if (initialError) {
     console.error('Error in initial job query:', initialError);
