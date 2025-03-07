@@ -25,6 +25,7 @@ export default async function JobsPage({
   };
   
   // Fetch jobs data with filters applied
+  // Jobs are now pre-sorted by active status across all pages in the database query
   const { jobs, totalPages, totalJobs } = await getPaginatedJobs(currentPage, 10, filters);
 
   return (

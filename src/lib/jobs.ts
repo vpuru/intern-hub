@@ -21,39 +21,34 @@ export async function getPaginatedJobs(page: number, pageSize: number = 10,
   totalJobs: number,
   totalPages: number 
 }> {
-  let query = supabase
+  // First, get all jobs that match the filters and determine which are active
+  // We'll fetch all jobs to analyze them for activity status
+  let initialQuery = supabase
     .from('jobs')
-    .select('*', { count: 'exact' });
+    .select('id, application_link');
   
   // Apply filters if provided
   if (filters) {
     if (filters.location && filters.location !== 'all') {
-      query = query.eq('location', filters.location);
+      initialQuery = initialQuery.eq('location', filters.location);
     }
     
     if (filters.category && filters.category !== 'all') {
-      // This assumes you have a 'category' column in your jobs table
-      // If the structure is different, adjust accordingly
-      query = query.eq('category', filters.category);
+      initialQuery = initialQuery.eq('category', filters.category);
     }
     
     if (filters.search) {
-      query = query.or(
+      initialQuery = initialQuery.or(
         `company_name.ilike.%${filters.search}%,role.ilike.%${filters.search}%,location.ilike.%${filters.search}%`
       );
     }
   }
   
-  // Calculate pagination
-  const from = (page - 1) * pageSize;
-  const to = from + pageSize - 1;
+  // Get all matching job IDs and determine which are active
+  const { data: allJobs, error: initialError, count: totalCount } = await initialQuery;
   
-  const { data, error, count } = await query
-    .range(from, to)
-    .order('date_posted', { ascending: false });
-  
-  if (error) {
-    console.error('Error fetching paginated jobs:', error);
+  if (initialError) {
+    console.error('Error in initial job query:', initialError);
     return {
       jobs: [],
       totalJobs: 0,
@@ -61,11 +56,67 @@ export async function getPaginatedJobs(page: number, pageSize: number = 10,
     };
   }
   
-  const totalJobs = count || 0;
+  // Separate active and inactive job IDs
+  const activeJobIds = allJobs
+    ?.filter(job => !!job.application_link && job.application_link !== "")
+    .map(job => job.id) || [];
+    
+  const inactiveJobIds = allJobs
+    ?.filter(job => !job.application_link || job.application_link === "")
+    .map(job => job.id) || [];
+  
+  console.log(`Found ${activeJobIds.length} active jobs and ${inactiveJobIds.length} inactive jobs`);
+  
+  // Determine which job IDs to fetch for this page
+  const allSortedIds = [...activeJobIds, ...inactiveJobIds];
+  const totalJobs = allSortedIds.length;
   const totalPages = Math.ceil(totalJobs / pageSize);
   
+  // Paginate the sorted IDs
+  const paginatedIds = allSortedIds.slice((page - 1) * pageSize, page * pageSize);
+  
+  if (paginatedIds.length === 0) {
+    return {
+      jobs: [],
+      totalJobs,
+      totalPages
+    };
+  }
+  
+  // Now fetch the full job data for the paginated IDs
+  const { data, error } = await supabase
+    .from('jobs')
+    .select('*')
+    .in('id', paginatedIds)
+    .order('date_posted', { ascending: false });
+  
+  if (error) {
+    console.error('Error fetching paginated jobs:', error);
+    return {
+      jobs: [],
+      totalJobs,
+      totalPages
+    };
+  }
+  
+  // Sort the fetched jobs to match the original sorted order of IDs
+  const sortedJobs = data ? data.sort((a, b) => {
+    // Get the indices of the jobs in the paginatedIds array
+    const indexA = paginatedIds.indexOf(a.id);
+    const indexB = paginatedIds.indexOf(b.id);
+    
+    // Sort by the index (which preserves the active-first ordering)
+    return indexA - indexB;
+  }) : [];
+  
+  // Mark jobs as active based on application link
+  const processedJobs = sortedJobs.map(job => ({
+    ...job,
+    active: !!job.application_link && job.application_link !== ""
+  }));
+  
   return {
-    jobs: data || [],
+    jobs: processedJobs,
     totalJobs,
     totalPages
   };
