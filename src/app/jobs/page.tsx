@@ -5,27 +5,25 @@ import Pagination from "@/components/Pagination";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export default async function JobsPage({ 
-  searchParams 
-}: { 
-  searchParams: { 
-    page?: string,
-    search?: string,
-    location?: string,
-    category?: string
-  } 
-}) {
-  const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
-  
-  // Extract filter parameters
-  const filters = {
-    search: searchParams.search || '',
-    location: searchParams.location || 'all',
-    category: searchParams.category || 'all'
+export default async function JobsPage({
+  searchParams,
+}: {
+  searchParams: {
+    page?: string;
+    search?: string;
+    location?: string;
+    category?: string;
   };
-  
-  // Fetch jobs data with filters applied
-  // Jobs are now pre-sorted by active status across all pages in the database query
+}) {
+  const params = await searchParams;
+  const currentPage = params.page ? parseInt(params.page) : 1;
+
+  const filters = {
+    search: params.search || "",
+    location: params.location || "all",
+    category: params.category || "all",
+  };
+
   const { jobs, totalPages, totalJobs } = await getPaginatedJobs(currentPage, 10, filters);
 
   return (
@@ -124,9 +122,7 @@ export default async function JobsPage({
           <div className="mb-8">
             <div className="space-y-4">
               {jobs.length > 0 ? (
-                jobs.map((job, index) => (
-                  <JobCard key={index} job={job} />
-                ))
+                jobs.map((job, index) => <JobCard key={index} job={job} />)
               ) : (
                 <div className="text-center py-10">
                   <h3 className="text-lg font-medium text-gray-900">No matching jobs found</h3>
@@ -140,10 +136,14 @@ export default async function JobsPage({
 
           {totalPages > 1 && (
             <div className="mt-8">
-              <Pagination 
-                currentPage={currentPage} 
-                totalPages={totalPages} 
-                baseUrl={`/jobs?search=${encodeURIComponent(filters.search)}&location=${encodeURIComponent(filters.location)}&category=${encodeURIComponent(filters.category)}`} 
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                baseUrl={`/jobs?search=${encodeURIComponent(
+                  filters.search
+                )}&location=${encodeURIComponent(filters.location)}&category=${encodeURIComponent(
+                  filters.category
+                )}`}
               />
             </div>
           )}
