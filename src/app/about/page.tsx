@@ -5,6 +5,10 @@ export const metadata = {
   description: 'Learn about InternHub, our mission, and how we help students find the best tech internships',
 };
 
+// Static page with no revalidation (fully static)
+export const dynamic = "force-static";
+export const revalidate = false;
+
 export default function AboutPage() {
   const teamMembers = [
     {

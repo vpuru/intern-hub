@@ -5,6 +5,10 @@ export const metadata = {
   description: 'Helpful resources for students seeking internships in the tech industry',
 };
 
+// Static page with no revalidation (fully static)
+export const dynamic = "force-static";
+export const revalidate = false;
+
 export default function ResourcesPage() {
   const resources = [
     {

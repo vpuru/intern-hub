@@ -2,8 +2,9 @@ import { getPaginatedJobs } from "@/lib/jobs";
 import JobCard from "@/components/JobCard";
 import Pagination from "@/components/Pagination";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// Cache the page but revalidate every 10 minutes
+export const dynamic = "force-static";
+export const revalidate = 600; // 10 minutes in seconds
 
 export default async function JobsPage({
   searchParams,

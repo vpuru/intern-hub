@@ -4,8 +4,9 @@ import { notFound } from "next/navigation";
 import { getJobByCompanyAndRole } from "@/lib/jobs";
 import { generateCompanyLogo, generateJobDescription } from "@/lib/mockData";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// Cache the page but revalidate every 10 minutes (same as the jobs listing page)
+export const dynamic = "force-static";
+export const revalidate = 600; // 10 minutes in seconds
 
 export async function generateMetadata({ params }: { params: { company: string; role: string } }) {
   const companyName = params.company.replace(/-/g, " ");

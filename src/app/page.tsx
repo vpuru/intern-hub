@@ -3,8 +3,9 @@ import Link from "next/link";
 import { getAllJobs } from "@/lib/jobs";
 import { generateCompanyLogo } from "@/lib/mockData";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// Static page with ISR (Incremental Static Regeneration)
+export const dynamic = "force-static";
+export const revalidate = 86400; // Cache for 24 hours
 
 export default async function Home() {
   const allJobs = await getAllJobs();
