@@ -124,69 +124,77 @@ export default async function Home() {
           </div>
 
           <div className="mt-16">
-            <div className="space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8">
-              <div className="relative">
-                <div className="relative pb-12 lg:pb-0">
-                  <div className="absolute left-0 top-0 h-full w-6 lg:w-full lg:h-6 flex items-center justify-center lg:justify-start lg:items-start">
-                    <div className="h-full w-1 bg-gray-200 lg:h-1 lg:w-full"></div>
-                  </div>
-                  <div className="relative flex items-start">
-                    <span className="h-12 w-12 rounded-full bg-indigo-600 flex items-center justify-center text-white text-lg font-semibold z-10">
-                      1
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 md:grid-cols-2">
+              <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="p-6">
+                  <div className="flex items-center justify-center mb-6">
+                    <span className="h-14 w-14 rounded-full bg-indigo-600 flex items-center justify-center text-white">
+                      <Image
+                        src="/send.svg"
+                        width={24}
+                        height={24}
+                        alt="Send"
+                        style={{ filter: "brightness(0) invert(1)" }}
+                      />
                     </span>
-                    <div className="ml-6">
-                      <h3 className="text-xl leading-6 font-medium text-gray-900">
-                        Browse Listings
-                      </h3>
-                      <p className="mt-2 text-base text-gray-500">
-                        Explore our curated database of internship opportunities from top tech
-                        companies.
-                      </p>
-                    </div>
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-xl leading-6 font-medium text-gray-900 mb-3">
+                      Browse Listings
+                    </h3>
+                    <p className="text-base text-gray-500">
+                      Explore our curated database of internship opportunities from top tech
+                      companies.
+                    </p>
                   </div>
                 </div>
               </div>
 
-              <div className="relative">
-                <div className="relative pb-12 lg:pb-0">
-                  <div className="absolute left-0 top-0 h-full w-6 lg:w-full lg:h-6 flex items-center justify-center lg:justify-start lg:items-start">
-                    <div className="h-full w-1 bg-gray-200 lg:h-1 lg:w-full"></div>
-                  </div>
-                  <div className="relative flex items-start">
-                    <span className="h-12 w-12 rounded-full bg-indigo-600 flex items-center justify-center text-white text-lg font-semibold z-10">
-                      2
+              <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="p-6">
+                  <div className="flex items-center justify-center mb-6">
+                    <span className="h-14 w-14 rounded-full bg-indigo-600 flex items-center justify-center text-white">
+                      <Image
+                        src="/jobs.svg"
+                        width={24}
+                        height={24}
+                        alt="Jobs"
+                        style={{ filter: "brightness(0) invert(1)" }}
+                      />
                     </span>
-                    <div className="ml-6">
-                      <h3 className="text-xl leading-6 font-medium text-gray-900">
-                        Prepare & Apply
-                      </h3>
-                      <p className="mt-2 text-base text-gray-500">
-                        Use our resources to prepare your application and improve your interview
-                        skills.
-                      </p>
-                    </div>
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-xl leading-6 font-medium text-gray-900 mb-3">
+                      Prepare & Apply
+                    </h3>
+                    <p className="text-base text-gray-500">
+                      Use our resources to prepare your application and improve your interview
+                      skills.
+                    </p>
                   </div>
                 </div>
               </div>
 
-              <div className="relative">
-                <div className="relative">
-                  <div className="absolute left-0 top-0 h-full w-6 lg:w-full lg:h-6 flex items-center justify-center lg:justify-start lg:items-start">
-                    <div className="h-full w-1 bg-gray-200 lg:h-1 lg:w-full"></div>
-                  </div>
-                  <div className="relative flex items-start">
-                    <span className="h-12 w-12 rounded-full bg-indigo-600 flex items-center justify-center text-white text-lg font-semibold z-10">
-                      3
+              <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="p-6">
+                  <div className="flex items-center justify-center mb-6">
+                    <span className="h-14 w-14 rounded-full bg-indigo-600 flex items-center justify-center text-white">
+                      <Image
+                        src="/adduser.svg"
+                        width={24}
+                        height={24}
+                        alt="Add User"
+                        style={{ filter: "brightness(0) invert(1)" }}
+                      />
                     </span>
-                    <div className="ml-6">
-                      <h3 className="text-xl leading-6 font-medium text-gray-900">
-                        Land Your Dream Role
-                      </h3>
-                      <p className="mt-2 text-base text-gray-500">
-                        Receive offers and kickstart your career in the tech industry with
-                        confidence.
-                      </p>
-                    </div>
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-xl leading-6 font-medium text-gray-900 mb-3">
+                      Land Your Dream Role
+                    </h3>
+                    <p className="text-base text-gray-500">
+                      Receive offers and kickstart your career in the tech industry with confidence.
+                    </p>
                   </div>
                 </div>
               </div>
