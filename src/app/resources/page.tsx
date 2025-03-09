@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Resources - InternHub',
-  description: 'Helpful resources for students seeking internships in the tech industry',
+  description: 'Articles and resources for students seeking internships in the tech industry',
 };
 
 // Static page with no revalidation (fully static)
@@ -10,46 +10,78 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 export default function ResourcesPage() {
-  const resources = [
+  const articles = [
     {
-      title: 'Resume Building',
-      description: 'Learn how to create a standout resume that will catch the attention of recruiters',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-      ),
-      link: '/resources/resume-tips',
+      id: 1,
+      title: 'Lorem ipsum dolor sit amet consectetur adipiscing',
+      excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      image: '/file.svg',
+      date: 'Mar 5, 2025',
+      readTime: '5 min read',
+      category: 'Interview Prep'
     },
     {
-      title: 'Technical Interview Prep',
-      description: 'Tips and strategies for acing technical interviews at top tech companies',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-        </svg>
-      ),
-      link: '/resources/interview-prep',
+      id: 2,
+      title: 'Ut enim ad minim veniam quis nostrud',
+      excerpt: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      image: '/file.svg',
+      date: 'Mar 3, 2025',
+      readTime: '7 min read',
+      category: 'Career Advice'
     },
     {
-      title: 'Career Advice',
-      description: 'Guidance on navigating your tech career path and making the most of your internship',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-        </svg>
-      ),
-      link: '/resources/career-advice',
+      id: 3,
+      title: 'Duis aute irure dolor in reprehenderit',
+      excerpt: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      image: '/file.svg',
+      date: 'Feb 28, 2025',
+      readTime: '4 min read',
+      category: 'Resume Tips'
     },
     {
-      title: 'Learning Paths',
-      description: 'Recommended courses and learning resources to build the skills companies are looking for',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-      ),
-      link: '/resources/learning-paths',
+      id: 4,
+      title: 'Excepteur sint occaecat cupidatat non proident',
+      excerpt: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      image: '/file.svg',
+      date: 'Feb 25, 2025',
+      readTime: '6 min read',
+      category: 'Technical Skills'
+    },
+    {
+      id: 5,
+      title: 'Sed ut perspiciatis unde omnis iste natus',
+      excerpt: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+      image: '/file.svg',
+      date: 'Feb 20, 2025',
+      readTime: '8 min read',
+      category: 'Interview Prep'
+    },
+    {
+      id: 6,
+      title: 'Nemo enim ipsam voluptatem quia voluptas',
+      excerpt: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.',
+      image: '/file.svg',
+      date: 'Feb 18, 2025',
+      readTime: '5 min read',
+      category: 'Career Advice'
+    },
+    {
+      id: 7,
+      title: 'Neque porro quisquam est qui dolorem ipsum',
+      excerpt: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.',
+      image: '/file.svg',
+      date: 'Feb 15, 2025',
+      readTime: '3 min read',
+      category: 'Resume Tips'
+    },
+    {
+      id: 8,
+      title: 'Quis autem vel eum iure reprehenderit',
+      excerpt: 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.',
+      image: '/file.svg',
+      date: 'Feb 10, 2025',
+      readTime: '7 min read',
+      category: 'Technical Skills'
     },
   ];
 
@@ -57,103 +89,83 @@ export default function ResourcesPage() {
     <div className="bg-gray-50 min-h-screen py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Resources for Internship Success</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Resources & Articles</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Everything you need to know to land your dream tech internship
+            Explore our collection of articles to help you succeed in your tech internship journey
           </p>
         </div>
         
-        {/* Resource Cards */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          {resources.map((resource, index) => (
+        {/* Articles Grid */}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {articles.map((article) => (
             <Link
-              key={index}
-              href={resource.link}
-              className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 flex items-start gap-6"
+              key={article.id}
+              href={`/resources/article/${article.id}`}
+              className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col h-full"
             >
-              <div className="shrink-0">
-                {resource.icon}
+              <div className="h-48 bg-gray-200 relative overflow-hidden">
+                <img 
+                  src={article.image} 
+                  alt={article.title}
+                  className="w-20 h-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                />
               </div>
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">{resource.title}</h2>
-                <p className="text-gray-600">{resource.description}</p>
+              <div className="p-6 flex-grow">
+                <div className="flex items-center mb-3">
+                  <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
+                    {article.category}
+                  </span>
+                  <span className="mx-2 text-gray-300">•</span>
+                  <span className="text-xs text-gray-500">{article.readTime}</span>
+                </div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">{article.title}</h2>
+                <p className="text-gray-600 text-sm line-clamp-3">{article.excerpt}</p>
+              </div>
+              <div className="px-6 pb-4">
+                <div className="text-xs text-gray-500">{article.date}</div>
               </div>
             </Link>
           ))}
         </div>
-        
-        {/* Featured Article */}
-        <div className="mt-16 max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="md:flex">
-            <div className="md:shrink-0 md:w-1/3 p-6 flex items-center justify-center bg-blue-50">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-32 w-32 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                <circle cx="12" cy="12" r="10" strokeWidth={1} />
-              </svg>
-            </div>
-            <div className="p-8 md:w-2/3">
-              <div className="uppercase tracking-wide text-sm text-blue-600 font-semibold">Featured Article</div>
-              <h2 className="mt-2 text-2xl font-bold text-gray-900">5 Ways to Stand Out in Your Tech Internship</h2>
-              <p className="mt-4 text-gray-600">
-                Discover proven strategies to make a lasting impression during your internship that can lead to full-time job offers and jumpstart your tech career.
+
+        {/* Featured Article Banner */}
+        <div className="mt-16 max-w-6xl mx-auto bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-md overflow-hidden">
+          <div className="md:flex items-center">
+            <div className="md:w-2/3 p-8 text-white">
+              <div className="uppercase tracking-wide text-xs font-semibold mb-2">Featured Article</div>
+              <h2 className="text-2xl font-bold mb-4">Lorem ipsum dolor sit amet consectetur elit sed do eiusmod</h2>
+              <p className="mb-6 opacity-90">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
               </p>
-              <div className="mt-6">
-                <Link
-                  href="/resources/featured"
-                  className="inline-flex items-center font-medium text-blue-600 hover:text-blue-500"
-                >
-                  Read the full article
-                  <svg className="ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </Link>
+              <div className="inline-flex bg-white text-blue-600 px-4 py-2 rounded-lg font-medium text-sm hover:bg-blue-50 transition-colors">
+                Read Featured Article
+              </div>
+            </div>
+            <div className="md:w-1/3 p-6 flex items-center justify-center">
+              <div className="h-48 w-48 rounded-full bg-blue-400 bg-opacity-30 flex items-center justify-center">
+                <img 
+                  src="/file.svg" 
+                  alt="Featured article" 
+                  className="w-24 h-24"
+                />
               </div>
             </div>
           </div>
         </div>
         
-        {/* Free Tools Section */}
-        <div className="mt-16">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-gray-900">Free Tools for Students</h2>
-            <p className="mt-2 text-lg text-gray-600 max-w-xl mx-auto">
-              Take advantage of these free resources to prepare for your internship search
-            </p>
-          </div>
-          
-          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <div className="bg-blue-100 text-blue-600 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Resume Template</h3>
-              <p className="text-gray-600 mb-4">A proven resume template designed specifically for tech internships.</p>
-              <a href="#" className="text-blue-600 hover:underline">Download Template</a>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <div className="bg-blue-100 text-blue-600 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Interview Scheduler</h3>
-              <p className="text-gray-600 mb-4">A tool to help you schedule and prepare for technical interviews.</p>
-              <a href="#" className="text-blue-600 hover:underline">Try It Free</a>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <div className="bg-blue-100 text-blue-600 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Mock Interview Questions</h3>
-              <p className="text-gray-600 mb-4">Practice with our collection of common technical interview questions.</p>
-              <a href="#" className="text-blue-600 hover:underline">Access Questions</a>
-            </div>
+        {/* Categories Section */}
+        <div className="mt-16 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8">Browse by Category</h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            {['Interview Prep', 'Resume Tips', 'Career Advice', 'Technical Skills', 'Networking', 'Job Search'].map((category) => (
+              <Link
+                key={category}
+                href={`/resources/category/${category.toLowerCase().replace(' ', '-')}`}
+                className="px-5 py-2 bg-white text-gray-700 rounded-full shadow-sm hover:shadow-md hover:bg-gray-50 transition-all"
+              >
+                {category}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
