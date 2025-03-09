@@ -3,7 +3,7 @@ export const metadata = {
   description: 'Contact InternHub with your questions, feedback, or partnership inquiries',
 };
 
-export default function AboutLayout({
+export default function ContactLayout({
   children,
 }: {
   children: React.ReactNode;

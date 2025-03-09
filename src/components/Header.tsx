@@ -36,7 +36,7 @@ export default function Header() {
               Resources
             </Link>
             <Link
-              href="/about"
+              href="/contact"
               className="text-base font-medium text-gray-600 hover:text-indigo-600 transition-colors duration-200"
             >
               Contact
@@ -120,11 +120,11 @@ export default function Header() {
               Resources
             </Link>
             <Link
-              href="/about"
+              href="/contact"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
               onClick={() => setIsMenuOpen(false)}
             >
-              About
+              Contact
             </Link>
             <div className="mt-4 px-3">
               <Link
